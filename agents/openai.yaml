@@ -1,0 +1,5 @@
+interface:
+  display_name: "历史视频剪辑助手 3.1"
+  short_description: "历史分镜、AI素材全量编排、原声切片与可编辑PPT回修"
+  brand_color: "#E8734A"
+  default_prompt: "使用 $jian-ji-zhu-shou-2-0 按文稿和原声编排全部AI素材、择用相关史料，结合v2版式与Shotcraft生成无字幕无占位的历史分镜及可编辑PPT，按REV回写中文并更新英文；只执行本次请求的阶段。"

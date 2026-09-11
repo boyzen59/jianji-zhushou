@@ -1,0 +1,38 @@
+/* 历史卡片基础样式。布局来自 v2 的通用信息结构；内容和主动画由项目提供。 */
+.history-frame {
+  --glass-tint: rgba(14, 14, 16, .26);
+  --glass-blur: 6px;
+  --glass-radius: 36px;
+  --ink: #fff;
+  --secondary-ink: rgba(255, 255, 255, .84);
+  --accent: #ed8657;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+}
+.history-glass {
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  border: 0;
+  outline: 0;
+  border-radius: var(--glass-radius);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+  padding: 36px 44px;
+}
+/* 不添加 ::before/::after 高光描边；不自动绑定入场动画。 */
+.history-zh { margin: 0; line-height: 1.2; font-weight: 700; }
+.history-en { margin: 14px 0 0; line-height: 1.35; color: var(--secondary-ink); }
+.history-accent { color: var(--accent); }
+.history-floating { position: absolute; left: 5%; top: 7%; max-width: 45%; }
+.history-split { display: grid; grid-template-columns: 1.7fr 1fr; align-items: center; gap: 4%; }
+.history-split.reverse { grid-template-columns: 1fr 1.7fr; }
+.history-evidence { width: 100%; height: 100%; object-fit: contain; }
+.history-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3%; }
+.history-grid { display: grid; grid-template-columns: repeat(var(--columns, 3), minmax(0, 1fr)); gap: 24px; }
+.history-timeline { display: grid; grid-template-columns: repeat(var(--events, 4), minmax(0, 1fr)); gap: 20px; align-items: center; }
+.history-data-number { font-variant-numeric: tabular-nums; }
+/* 图表轴/关系边为语义图形，按数据绘制；不受卡片无描边设置影响。 */
