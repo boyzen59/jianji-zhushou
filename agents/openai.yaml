@@ -1,5 +1,5 @@
 interface:
-  display_name: "历史视频剪辑助手 3.3"
+  display_name: "历史视频剪辑助手 3.4"
   short_description: "历史视频素材全量编排、批准版式锁定、真实动效和中文审阅交接"
   brand_color: "#E8734A"
   default_prompt: "使用 $jian-ji-zhu-shou-2-0 按已批准文稿和画面处理当前历史视频任务，编排实际素材与动效，只交付本次要求的格式和阶段。"
