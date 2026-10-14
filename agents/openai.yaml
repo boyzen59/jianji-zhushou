@@ -1,0 +1,5 @@
+interface:
+  display_name: "历史视频剪辑助手 2.0"
+  short_description: "文案驱动分镜、用户参考优先、Remotion高级动效与素材衔接"
+  brand_color: "#E8734A"
+  default_prompt: "使用 $jian-ji-zhu-shou-2-0 阅读我的中文文案、时间戳和素材，以我收录的Skill为首要动效参考，自主设计分镜和跨镜衔接，并用Remotion落实本次需要的制作阶段。"

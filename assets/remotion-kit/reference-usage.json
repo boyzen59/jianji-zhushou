@@ -1,0 +1,62 @@
+{
+  "kind": "original-mechanism-study",
+  "note": "原创演示文案与程序图形，非用户正式成片、非历史证据；配色和布局不是未来视频的限制。未复制外部代码。",
+  "entry": "src/index.tsx",
+  "composition": "MotionStudy",
+  "fps": 60,
+  "durationInFrames": 960,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "audio": "none",
+  "references": [
+    {
+      "component": "SharedElement / poseAt",
+      "source": "https://github.com/echris6/motion-video-kit",
+      "path": "business-motion-film/references/motion-grammar.md",
+      "mechanism": "对象身份跨镜延续、状态接力",
+      "adaptation": "原创全局关键帧插值，增加可选Bezier控制点；点从图卡穿行到关系图再变成球体。"
+    },
+    {
+      "component": "MediaCard",
+      "source": "高级动效开场.docx",
+      "mechanism": "底层/信息/主动画分层与多卡空间关系",
+      "adaptation": "原创CSS perspective与错峰，示范内容为程序纹样；未复制文档中未给出的代码。"
+    },
+    {
+      "component": "TracePath / Network",
+      "source": "https://github.com/alchaincyf/huashu-art-motion",
+      "path": "references/镜头表模板.md",
+      "mechanism": "主体动作与解释图形相配合",
+      "adaptation": "原创定性三节点路径，线条逐帧生长；不包含统计数据或地理结论。"
+    },
+    {
+      "component": "TornMatte",
+      "source": "口播风格的提示词.docx",
+      "mechanism": "复古纸本拼贴与有机边缘",
+      "adaptation": "原创固定seed撕边多边形；只示范纸边，不宣称完整实现印刷网点/手绘/水墨所有变体。"
+    },
+    {
+      "component": "MonochromeLight",
+      "source": "单彩渐变效果提示词.docx",
+      "mechanism": "单色光域、旋转放射、主体揭示",
+      "adaptation": "原创渐变光场；不是剪映参数1:1映射，也不是物理丁达尔/快门模糊。"
+    },
+    {
+      "component": "phase / stagger / RevealText",
+      "source": "https://github.com/haidrrrry/claude-remotion-skill",
+      "path": "remotion-motion-graphics/references/motion-patterns.md",
+      "mechanism": "错峰、缓动、遮罩揭示",
+      "adaptation": "原创帧函数；去掉每图Ken Burns和持续呼吸硬要求。"
+    }
+  ],
+  "verification": {
+    "typecheck": "passed",
+    "render": "passed",
+    "frame_seek_reproducibility": "same PNG SHA256 at frame 405 after seeking 648",
+    "visual_review": "关键构图和转场中帧抽检；修正遮挡、轨迹偏离及标题叠压",
+    "realtime_playback_review": "not_performed",
+    "meaning": "不等于每个上游项目已安装、每条配方已实现或正式视频已完成"
+  }
+}
