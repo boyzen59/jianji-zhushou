@@ -83,6 +83,57 @@ class StoryboardTests(unittest.TestCase):
         }]
         self.reject()
 
+class ProductionPolicyTests(unittest.TestCase):
+    def setUp(self):
+        self.data = json.loads(SAMPLE.read_text(encoding="utf-8"))
+    def test_subtitles_off_requires_empty_projection(self):
+        self.data["scenes"][0]["texts"][0]["role"] = "subtitle_zh"
+        self.assertFalse(validate(self.data)["ok"])
+    def test_no_subtitle_switch_without_policy_change(self):
+        self.data["production_policy"]["subtitles"]["mode"] = "burned"
+        self.assertFalse(validate(self.data)["ok"])
+    def test_safe_area_must_be_inside_frame(self):
+        self.data["production_policy"]["subtitles"]["safe_area"]["y"] = 0.99
+        self.assertFalse(validate(self.data)["ok"])
+    def test_legacy_compatibility_is_explicit(self):
+        self.data["schema_version"] = 4
+        del self.data["production_policy"]
+        result = validate(self.data)
+        self.assertTrue(result["ok"])
+        self.assertTrue(any("Legacy" in w for w in result["warnings"]))
+    def test_conflicting_stable_text_id(self):
+        self.data["scenes"][1]["texts"][0]["zh"] = "不同文本"
+        self.assertFalse(validate(self.data)["ok"])
+    def add_video(self):
+        self.data["duration_frames"] = 600
+        self.data["scenes"][-1]["end_frame_exclusive"] = 600
+        video = {"asset_id": "V001", "playback_id": "PLAY001", "kind": "ai_video",
+                 "availability": "pending", "path": None, "source_in_seconds": 0,
+                 "source_out_seconds": 10, "playback_rate": 1,
+                 "visible_start_frame": 0, "visible_end_frame_exclusive": 600}
+        for scene in self.data["scenes"]:
+            scene["media_layers"] = [copy.deepcopy(video)]
+        return self.data["scenes"][0]["media_layers"][0]
+    def test_pending_full_video_across_scenes_is_valid_plan(self):
+        self.add_video()
+        self.assertTrue(validate(self.data)["ok"])
+    def test_pending_video_not_production_ready(self):
+        self.add_video()
+        self.assertFalse(validate(self.data, SAMPLE.parent)["ok"])
+    def test_trim_speed_and_short_window_rejected(self):
+        for key, value in (("source_in_seconds", 1), ("source_out_seconds", 8),
+                           ("playback_rate", 0.5), ("visible_end_frame_exclusive", 480)):
+            self.setUp()
+            self.add_video()[key] = value
+            self.assertFalse(validate(self.data)["ok"], key)
+    def test_repeat_video_rejected(self):
+        self.add_video()
+        self.data["scenes"][1]["media_layers"][0]["playback_id"] = "PLAY002"
+        self.assertFalse(validate(self.data)["ok"])
+    def test_fake_path_for_pending_asset_rejected(self):
+        self.add_video()["path"] = "not-generated.mp4"
+        self.assertFalse(validate(self.data)["ok"])
+
 class RenderPlanTests(unittest.TestCase):
     def test_multiple_fps_and_contiguous_chunks(self):
         for fps in (24, 30, 60):

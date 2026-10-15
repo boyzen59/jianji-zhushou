@@ -1,5 +1,5 @@
 interface:
-  display_name: "历史视频剪辑助手 2.0"
-  short_description: "文案驱动分镜、用户参考优先、Remotion高级动效与素材衔接"
+  display_name: "历史视频剪辑助手 3.0"
+  short_description: "文案驱动分镜、整段AI视频、真人录制包、16比9文字画面校对与Remotion动效"
   brand_color: "#E8734A"
-  default_prompt: "使用 $jian-ji-zhu-shou-2-0 阅读我的中文文案、时间戳和素材，以我收录的Skill为首要动效参考，自主设计分镜和跨镜衔接，并用Remotion落实本次需要的制作阶段。"
+  default_prompt: "使用 $jian-ji-zhu-shou-3-0 按我的文案与素材大纲自主制定导演MD、10秒整段视频和真人录制计划，以收录Skill设计Remotion动效，交中文文字Word与16比9画面PDF；正式成片无逐句字幕，但保留字幕安全区。"

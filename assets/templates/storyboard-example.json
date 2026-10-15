@@ -1,9 +1,15 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "engine": "remotion",
   "fps": 60,
   "duration_frames": 360,
-  "note": "原创结构示例，不是用户文案，不是已完成剪辑。实际时间须按用户录音重定。",
+  "note": "原创的片中两镜结构摘例，不是完整影片或用户文案。6秒示例不承载开场15秒真人和10秒AI视频；production_policy用于完整项目。实际时间须按用户录音重定。",
+  "production_policy": {
+    "subtitles": {"mode": "off", "reserve_space": true, "safe_area": {"x": 0.05, "y": 0.82, "width": 0.90, "height": 0.14}},
+    "ai_video": {"source_in_seconds": 0, "duration_seconds": 10, "playback_rate": 1, "plays": 1},
+    "presenter": {"opening_fullscreen_seconds": 15, "later_mode": "bottom_right_pip"},
+    "review": {"storyboard_approval_required": false, "word_language": "zh", "pdf_aspect": "16:9", "english": "placeholder_until_zh_revision"}
+  },
   "source_sentences": [
     {
       "id": "DEMO-01",
@@ -93,6 +99,7 @@
           200
         ]
       },
+      "texts": [{"id": "DEMO-T01", "role": "chart_label", "zh": "都城", "en": ""}],
       "media_layers": [],
       "verification": "planned"
     },
@@ -153,6 +160,7 @@
         "type": "cut",
         "description": "示例结束；真实片继续接战场素材"
       },
+      "texts": [{"id": "DEMO-T01", "role": "chart_label", "zh": "都城", "en": ""}, {"id": "DEMO-T02", "role": "chart_label", "zh": "前线", "en": ""}],
       "media_layers": [],
       "verification": "planned"
     }
