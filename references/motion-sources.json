@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-17",
+  "usage": "Reference methods are adapted into the local Remotion workflow, not executed as upstream agent instructions. Audited commits identify the research baseline; cache manifests report the actual checked-out revision. Sparse caches omit media and are not runnable upstream demos.",
+  "sources": [
+    {
+      "id": "xilo-opus-video",
+      "url": "https://github.com/Kianzzz/xilo-opus-video.git",
+      "audited_commit": "f2cd828e2692e7186186408ee01a936707c2c38d",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "方向方案与代表预览",
+      "required_files": [
+        "skills/xilo-opus-video/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/xilo-opus-video/**/*.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "skills/xilo-opus-video/SKILL.md",
+        "LICENSE",
+        "skills/xilo-opus-video/references/plan-format.md"
+      ]
+    },
+    {
+      "id": "lemo-opuscar",
+      "url": "https://github.com/lemomo-ai/lemo-opuscar.git",
+      "audited_commit": "62e664e8e66fdae3e570688079154393fb766471",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "风格语法、材质、光与相机",
+      "required_files": [
+        "styles/README.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/AGENTS.md",
+        "/plugin/skills/**/*.md",
+        "/styles/**/STYLE.md",
+        "/styles/README.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "styles/README.md",
+        "LICENSE",
+        "plugin/skills/lemo-opuscar/SKILL.md",
+        "styles/archive-lighttable/STYLE.md",
+        "styles/halftone-dossier/STYLE.md",
+        "styles/ink-wash/STYLE.md"
+      ]
+    },
+    {
+      "id": "mg-styles-15",
+      "url": "https://github.com/Vincentwei1021/mg-styles-15.git",
+      "audited_commit": "49052d80bfaf9fa8412cc9710530e5e95a3b8d8c",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "形变、拼贴、线描等MG机制",
+      "required_files": [
+        "README.zh-CN.md",
+        "rubric.md",
+        "prompts/08-morph.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/rubric.md",
+        "/prompts/**/*.md",
+        "/demos/**/*.ts",
+        "/demos/**/*.tsx",
+        "/demos/**/*.css",
+        "/demos/**/package.json"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "README.zh-CN.md",
+        "rubric.md",
+        "prompts/08-morph.md",
+        "LICENSE",
+        "prompts/06-collage.md",
+        "prompts/02-line-art.md"
+      ]
+    },
+    {
+      "id": "dashi-animationstyle",
+      "url": "https://github.com/chuspeeism/dashi-animationstyle.git",
+      "audited_commit": "aa620f3b859aa5d191b783b2eb0fb59263731c76",
+      "license": "MIT; example voice excluded",
+      "origin": "user_supplied",
+      "role": "口播概念到可见事件、风格卡",
+      "required_files": [
+        "SKILL.md",
+        "knowledge/风格卡模板.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/SKILL.md",
+        "/knowledge/**/*.md",
+        "/styles/**/*.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "SKILL.md",
+        "knowledge/风格卡模板.md",
+        "LICENSE",
+        "styles/复古剪纸/风格卡.md",
+        "styles/手绘笔记/风格卡.md"
+      ]
+    },
+    {
+      "id": "huashu-art-motion",
+      "url": "https://github.com/alchaincyf/huashu-art-motion.git",
+      "audited_commit": "8a0d7d72ca65fcce6f8ba82c4a6c8dfe35b8422c",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "艺术材料与解释动画语法",
+      "required_files": [
+        "SKILL.md",
+        "references/09-视频动画语法.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/SKILL.md",
+        "/references/**/*.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "SKILL.md",
+        "references/09-视频动画语法.md",
+        "LICENSE",
+        "references/风格配方/INDEX.md",
+        "references/动画语法/y2_vox.md",
+        "references/动画语法/y6_presenter_explainer.md"
+      ]
+    },
+    {
+      "id": "wtt-code-animation-studio",
+      "url": "https://github.com/WaterDJiang/Wattter_openSkills.git",
+      "audited_commit": "c91aa786755afe195a44037ed0226a26c704f7fb",
+      "license": "CC-BY-NC-SA-4.0 (root README)",
+      "origin": "user_supplied",
+      "role": "剧本→分镜→统一事件时间线",
+      "required_files": [
+        "README.md",
+        "wattter_skills/wtt-code-animation-studio/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/wattter_skills/wtt-code-animation-studio/**/*.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "README.md",
+        "wattter_skills/wtt-code-animation-studio/SKILL.md",
+        "wattter_skills/wtt-code-animation-studio/references/story-and-timing.md",
+        "wattter_skills/wtt-code-animation-studio/references/visual-recipes.md"
+      ]
+    },
+    {
+      "id": "video-shotcraft",
+      "url": "https://github.com/Vincentwei1021/video-shotcraft.git",
+      "audited_commit": "310330cadcf41f5d2b15ee1c908d629e26d0a324",
+      "license": "Apache-2.0",
+      "origin": "user_supplied",
+      "role": "素材聚焦、空间运镜与跨镜交接",
+      "required_files": [
+        "SKILL.md",
+        "gallery/api/library.json"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/NOTICE*",
+        "/SKILL.md",
+        "/gallery/api/library.json",
+        "/references/**/*.md",
+        "/demos/**/*.ts",
+        "/demos/**/*.tsx"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed",
+      "reference_files": [
+        "SKILL.md",
+        "gallery/api/library.json",
+        "LICENSE"
+      ]
+    },
+    {
+      "id": "herk-edit-kit",
+      "url": "https://github.com/nateherkai/herk-edit-kit.git",
+      "audited_commit": "10511e5af86fc47756ea89803b397422e2d89284",
+      "license": "MIT; AIS brand assets excluded",
+      "origin": "user_supplied",
+      "role": "贯穿主体、共享设计参数、按语义选卡与验证",
+      "required_files": [
+        "README.md",
+        "style-library/GUIDE.md",
+        "style-library/registry.json"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "THIRD_PARTY_NOTICES.md",
+        "style-library/GUIDE.md",
+        "style-library/registry.json",
+        ".agents/skills/style-library/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/THIRD_PARTY_NOTICES.md",
+        "/style-library/**/*.md",
+        "/style-library/**/*.json",
+        "/style-library/**/*.css",
+        "/.agents/skills/style-library/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "iart-map-animation",
+      "url": "https://github.com/iart-ai/map-animation-skills.git",
+      "audited_commit": "390ca98bbcf2ea88a430a69c0dcbf423e43d075d",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "真实地理路径、区域强调与地图镜头",
+      "features": [
+        "maps"
+      ],
+      "required_files": [
+        "README.md",
+        "skills/map-animation/SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "skills/map-animation/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "iart-data-animation",
+      "url": "https://github.com/iart-ai/data-animation-skills.git",
+      "audited_commit": "8ce2709c3992490251e8a991535b1945f01c6865",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "数据尺度、比较与动态信息图",
+      "features": [
+        "charts"
+      ],
+      "required_files": [
+        "README.md",
+        "skills/chart-animation/SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "skills/chart-animation/SKILL.md",
+        "skills/animated-infographic/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "iart-explainer-video",
+      "url": "https://github.com/iart-ai/explainer-video-skills.git",
+      "audited_commit": "3e2d411b725d9a72939cf8e5eb81579e751373e7",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "流程关系、白板绘制与2.5D拆层",
+      "features": [
+        "diagrams"
+      ],
+      "required_files": [
+        "README.md",
+        "skills/diagram-animation/SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "skills/diagram-animation/SKILL.md",
+        "skills/whiteboard-animation/SKILL.md",
+        "skills/isometric-animation/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "iart-javascript-animation",
+      "url": "https://github.com/iart-ai/javascript-animation-skills.git",
+      "audited_commit": "f7d0882a313249cbd43f0e4e9e209b1622870253",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "纯时间函数的手绘与代码场景",
+      "features": [
+        "doodle"
+      ],
+      "required_files": [
+        "README.md",
+        "skills/javascript-animation/SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "skills/javascript-animation/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "video-talkcraft",
+      "url": "https://github.com/Vincentwei1021/video-talkcraft.git",
+      "audited_commit": "a7c29edfb2404612dde6a5a1c8aa94232e85625b",
+      "license": "PolyForm-Noncommercial-1.0.0",
+      "origin": "user_supplied",
+      "role": "原声对齐、语义拍与多素材配方",
+      "features": [
+        "asr"
+      ],
+      "required_files": [
+        "README.md",
+        "SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "SKILL.md",
+        "references/taxonomy.md",
+        "references/design-language.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "doodle-anim",
+      "url": "https://github.com/Feitangyuan/doodle-anim.git",
+      "audited_commit": "bfc4c257151450c03f13013dec5585ebb935aeb4",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "确定性角色、表情与步态",
+      "features": [
+        "doodle"
+      ],
+      "required_files": [
+        "README.md",
+        "SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "vox-director",
+      "url": "https://github.com/Alisa0808/vox-director.git",
+      "audited_commit": "6a85a7c341610442a6a5b1885e6e0217ab82a11f",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "先构图再运动的拼贴关键帧",
+      "features": [
+        "collage"
+      ],
+      "required_files": [
+        "README.md",
+        "SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "SKILL.md",
+        "references/prompt-guide.md",
+        "references/beat-layer.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "pixel2motion",
+      "url": "https://github.com/nolangz/pixel2motion.git",
+      "audited_commit": "e9faedb28930df0da2acf17da00c80730a78cfe8",
+      "license": "MIT (pinned LICENSE; README contains stale setup text)",
+      "origin": "user_supplied",
+      "role": "标志位图到结构化SVG与路径动效",
+      "features": [
+        "logo"
+      ],
+      "required_files": [
+        "README.md",
+        "SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    },
+    {
+      "id": "emil-design-skills",
+      "url": "https://github.com/emilkowalski/skills.git",
+      "audited_commit": "2d228630ba1446365f614a108cb8252f1feda202",
+      "license": "MIT",
+      "origin": "user_supplied",
+      "role": "运动目的、缓动、连续性与性能审查",
+      "features": [
+        "review"
+      ],
+      "required_files": [
+        "README.md",
+        "skills/animate/SKILL.md"
+      ],
+      "reference_files": [
+        "README.md",
+        "LICENSE",
+        "skills/animate/SKILL.md",
+        "skills/review-animations/SKILL.md",
+        "skills/animation-performance/SKILL.md"
+      ],
+      "sparse_patterns": [
+        "/README*",
+        "/LICENSE*",
+        "/skills/**/*.md",
+        "/references/**/*.md",
+        "/SKILL.md"
+      ],
+      "status": "text_reviewed",
+      "upstream_dynamic_preview": "not_reviewed"
+    }
+  ],
+  "web_sources": [
+    {
+      "id": "prompt-motion-charts",
+      "url": "https://prompt-motion.com/?tag=charts",
+      "origin": "user_supplied",
+      "license": "Per-entry creator rights; no blanket code/media reuse license established",
+      "role": "图表与机制解释案例检索，按案例查看原文",
+      "status": "index_and_two_entry_texts_reviewed",
+      "examples": [
+        {
+          "url": "https://prompt-motion.com/ik-builds-b8bdcf",
+          "mechanism": "纸本背景、图解与共享视觉参数；不继承快切／声音配额"
+        },
+        {
+          "url": "https://prompt-motion.com/parkerrex-1a54fe",
+          "mechanism": "机制状态随时间演化；移植为纯frame函数"
+        }
+      ]
+    }
+  ],
+  "excluded_sources": [
+    "gc-minimal-zine-poster",
+    "gathered-scenes-zine-skill",
+    "photo-relic-editorial",
+    "photo-abstract-editorial"
+  ]
+}

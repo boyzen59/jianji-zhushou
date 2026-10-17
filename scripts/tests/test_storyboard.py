@@ -172,16 +172,28 @@ class MediaProfileTests(unittest.TestCase):
         self.assertTrue(self.run_verify())
 
 class PreflightNoticeTests(unittest.TestCase):
-    def test_missing_cache_requires_notice_not_a_fake_engine_failure(self):
+    def test_unused_caches_do_not_create_notices(self):
         with tempfile.TemporaryDirectory() as folder:
             script = Path(__file__).resolve().parents[1] / "preflight_check.py"
             run = subprocess.run([sys.executable, "-X", "utf8", str(script), "--project-root", folder,
                                   "--cache-root", folder, "--stage", "text"], capture_output=True, text=True, encoding="utf-8")
             self.assertEqual(run.returncode, 0, run.stderr)
             report = json.loads(run.stdout)
-            self.assertEqual(report["planning_status"], "NEEDS_REFERENCE_NOTICE")
-            self.assertTrue(report["reference_notice"]["required"])
-            self.assertIn("video-shotcraft", [r["name"] for r in report["reference_notice"]["missing_cache"]])
+            self.assertEqual(report["planning_status"], "REFERENCES_NOT_REQUESTED")
+            self.assertFalse(report["reference_notice"]["required"])
+            self.assertEqual(report["reference_libraries"], [])
+    def test_only_selected_missing_caches_are_reported(self):
+        with tempfile.TemporaryDirectory() as folder:
+            script = Path(__file__).resolve().parents[1] / "preflight_check.py"
+            run = subprocess.run([sys.executable, "-X", "utf8", str(script), "--project-root", folder,
+                                  "--cache-root", folder, "--stage", "text",
+                                  "--library", "lemo-opuscar", "--library", "wtt-code-animation-studio",
+                                  "--library", "lemo-opuscar"], capture_output=True, text=True, encoding="utf-8")
+            self.assertEqual(run.returncode, 0, run.stderr)
+            report = json.loads(run.stdout)
+            self.assertEqual(report["planning_status"], "SELECTED_REFERENCES_MISSING")
+            self.assertEqual([r["name"] for r in report["reference_libraries"]],
+                             ["lemo-opuscar", "wtt-code-animation-studio"])
     def test_no_blanket_install(self):
         script = Path(__file__).resolve().parents[1] / "bootstrap_motion_libraries.py"
         run = subprocess.run([sys.executable, "-X", "utf8", str(script), "--library", "all", "--install-missing"], capture_output=True, text=True, encoding="utf-8")

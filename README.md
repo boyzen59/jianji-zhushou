@@ -1,17 +1,17 @@
 # jianji-zhushou 3.0
 
-历史视频剪辑助手 Skill 3.0。文案为核心，用户收录的动效项目为首要设计参考；自主拟定素材衔接与逐镜动作，统一用Remotion实现。
+中文文案驱动的视觉导演与 Remotion 制作技能。覆盖风格、地图、数据图表、解释动画、手绘、拼贴和标志动作，包含按需参考检索、录制与文字审阅工具。
 
-## 使用
+显示名称为 `jianji-zhushou 3.0`，调用 `$jianji-zhushou`。安装目录为 `~/.codex/skills/jianji-zhushou/`。入口：[SKILL.md](SKILL.md)。
 
-将本目录放入 Codex 的 skills 目录；已有安装可保留 `~/.codex/skills/jianji-zhushou/` 路径，避免同时加载新旧两个版本。在新任务中调用 `$jian-ji-zhu-shou-3-0`。入口为 [SKILL.md](SKILL.md)，按任务读取 references，不需要加载所有文档。版本号3.0是Skill版本，不是Remotion包版本；已有2.0参考缓存继续复用。
+安装时先看[支持清单](references/installation-and-support.md)：Python版本、Node／Remotion、功能库及会调用的技能。运行`scripts/check_installation.py --project-root <制作目录> --feature all`查看缺项；需要一次补齐时用`scripts/setup_support.py --project-root <制作目录> --feature all --install --with-references`。依赖安装到制作工程，不放入技能目录。
 
-支持中文文案、原录音、时间戳、成品素材或待生成的提示词大纲。默认交导演执行MD、素材需求、完整真人录制包、中文文字修改Word与16:9静态画面审阅PDF。PDF展示构图、文字位置和出现模式；Word只收实际屏显中文，英文根据中文定稿后生成，不要求用户审分镜。PPTX仅按需另交。
+创作硬约束：先完整分析文案；分析时全量参考能力目录、执行时按文案选用；全片坚持唯一风格卡与共享tokens。自主糅合图、表、拼贴、图解与生成图扩展，不硬套模板或追求效果配额。风格选择直接交5页视觉PDF；已定风格沿用。按请求完成计划、审阅、局部动画或成片，不要求每次都跑完整流程。
 
-AI视频高用量、每条10秒整段正常播放一次；图片和历史证据通过Remotion动效串联。开头15秒全屏真人，之后选择段落右下小窗。成片不显示中文或英文逐句口播字幕，但布局保留字幕安全区；标题、关键词、图解和史料题注保留且全部校对。计划阶段不反复看图、不预览视频模板；明确要求的16:9文字画面PDF只做静态构图，实际动作适配在执行阶段完成。
+- [制作默认值](references/production-defaults.md)：原声、10秒AI视频、真人、字幕区、文字校对。
+- [内容模块](references/content-motion-modules.md)：按文案糅合地图、数据、图解、手绘、同步、拼贴与标志动作。
+- [参考路由](references/motion-reference-index.md)：原有来源及iart子库、Talkcraft、Doodle、Vox、Pixel2Motion与Emil的具体入口。
+- [Remotion制作](references/remotion-production.md)：随附基础组件与工程使用方法。
+- [官方指导依据](references/maintenance-basis.md)：本次精简依据、适用范围。
 
-制作计划开工前检查Shotcraft及其他参考缓存、实际Skill路径和拟用插件；缺项必须先提醒用途、影响与补齐方式。已授权按需下载审核时逐项补齐，无需重复询问。没有补齐或放行时可继续原文整理等独立工作，不冒称已学习缺失参考。
-
-## 第三方资料
-
-`assets/reference/video-spec-builder-LICENSE.txt` 保留随附资料的上游许可。动效库按脚本需要从原仓库获取；它们的代码及素材继续遵守各自许可证。本仓库不包含私人录制、视频项目成片、账号凭据或完整外部动效仓库。
+外部项目按原许可证使用；wtt纳入个人非商业使用参考，保留来源与许可说明。通用包不携带示例配音或私人项目。可选旧版式与第三方资料的原许可证继续保留。

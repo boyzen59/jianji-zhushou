@@ -32,6 +32,7 @@ def command_status(name: str, project_root: Path) -> dict:
 def repo_status(name: str, cache_root: Path) -> dict:
     path = cache_root / name
     result = {"name": name, "kind": library_kind(name), "origin": reference_origin(name), "ok": valid_repo(path, name), "path": str(path)}
+    result["reference_path"] = str(path / "reference-snapshot" if (path / "reference-snapshot" / "source.json").is_file() else path)
     if name == "video-spec-builder":
         index = cache_root / "video-spec-builder-index.json"
         result.update({"source_index": str(index), "index_ready": index.is_file(), "direct_import_ready": False})
@@ -44,6 +45,8 @@ def main() -> int:
     parser.add_argument("--project-root", type=Path, required=True)
     parser.add_argument("--stage", choices=tuple(STAGE_RUNTIMES), default="text", help="Only missing dependencies needed for this stage are blocking.")
     parser.add_argument("--cache-root", type=Path, default=DEFAULT_ROOT)
+    parser.add_argument("--library", action="append", choices=("all",) + tuple(LIBRARIES), default=[],
+                        help="Check only selected reference caches; repeat for multiple libraries.")
     parser.add_argument("--json-output", type=Path)
     args = parser.parse_args()
     root = args.project_root.expanduser().resolve()
@@ -55,7 +58,8 @@ def main() -> int:
             if ext in counts:
                 counts[ext] += 1
     commands = [command_status(name, root) for name in ("node", "npx", "python", "ffmpeg", "ffprobe")]
-    libraries = [repo_status(name, args.cache_root.expanduser().resolve()) for name in LIBRARIES]
+    selected = list(LIBRARIES) if "all" in args.library else list(dict.fromkeys(args.library))
+    libraries = [repo_status(name, args.cache_root.expanduser().resolve()) for name in selected]
     errors = []
     warnings = []
     if not root.is_dir():
@@ -64,23 +68,22 @@ def main() -> int:
         warnings.append("no DOCX or SRT found under project root")
     for item in commands:
         item["required"] = item["name"] in STAGE_RUNTIMES[args.stage]
-        if not item["ok"]:
-            (errors if item["required"] else warnings).append(f"missing runtime: {item['name']}")
-    # References are not render engines, but this user's workflow requires an
-    # explicit missing-reference notice BEFORE a production plan is finalized.
+        if not item["ok"] and item["required"]:
+            errors.append(f"missing runtime: {item['name']}")
+    # A missing optional reference cache is not an approval gate or engine failure.
     for item in libraries:
         item["required"] = False
     missing_references = [item for item in libraries if not item["ok"]]
     for item in missing_references:
-        warnings.append(f"notify user before planning: reference cache missing/incomplete: {item['name']} at {item['path']} (check other installed paths before claiming uninstalled)")
+        warnings.append(f"selected reference cache missing/incomplete: {item['name']} at {item['path']}; use verified online or other local sources if available")
     reference_notice = {
         "required": bool(missing_references),
         "missing_cache": [{"name": item["name"], "path": item["path"], "origin": item["origin"]} for item in missing_references],
         "plugin_check": "not_checked_by_filesystem_script; inspect only actual required tools/connections",
         "scope": "configured cache only; not a whole-machine skill installation audit",
-        "next_action": "Tell the user what is missing, its impact and how to supply it; allow replenishment or obtain an explicit choice to proceed without it before finalizing the affected motion plan" if missing_references else "Cache check complete; inspect any project-specific plugin requirements",
+        "next_action": "Resolve only the selected references needed for this task; continue independent work. Do not infer that all creation is blocked." if missing_references else "No selected reference gaps; inspect project-specific tools only when needed.",
     }
-    remotion = {"required": args.stage == "render", "declared": False, "installed": False}
+    remotion = {"required": args.stage in {"motion", "render"}, "declared": False, "installed": False}
     package_path = root / "package.json"
     if package_path.is_file():
         try:
@@ -91,7 +94,7 @@ def main() -> int:
         except (OSError, ValueError) as exc:
             errors.append(f"cannot read package.json: {exc}")
     node_path = next((item["path"] for item in commands if item["name"] == "node" and item["ok"]), None)
-    if node_path and root.is_dir():
+    if remotion["required"] and node_path and root.is_dir():
         import subprocess
         try:
             result = subprocess.run([node_path, "-e", "console.log(require.resolve('remotion'))"], cwd=root, capture_output=True, text=True, timeout=10)
@@ -100,7 +103,7 @@ def main() -> int:
             pass
     if remotion["required"] and not remotion["installed"]:
         errors.append("Remotion is not installed in the selected production project; pass the actual Remotion project root")
-    report = {"ok": not errors, "ok_scope": "technical runtime checks, not user acknowledgement or design approval", "stage": args.stage, "planning_status": "NEEDS_REFERENCE_NOTICE" if missing_references else "REFERENCE_CACHE_CHECK_PASSED", "reference_notice": reference_notice, "project_root": str(root), "input_counts": counts, "commands": commands, "remotion": remotion, "reference_libraries": libraries, "errors": errors, "warnings": warnings}
+    report = {"ok": not errors, "ok_scope": "technical runtime checks, not design approval", "stage": args.stage, "planning_status": "SELECTED_REFERENCES_MISSING" if missing_references else "SELECTED_REFERENCES_READY" if selected else "REFERENCES_NOT_REQUESTED", "reference_notice": reference_notice, "project_root": str(root), "input_counts": counts, "commands": commands, "remotion": remotion, "reference_libraries": libraries, "errors": errors, "warnings": warnings}
     rendered = json.dumps(report, ensure_ascii=False, indent=2)
     print(rendered)
     if args.json_output:

@@ -1,0 +1,24 @@
+{
+  "kind": "original-reference-mechanism-study",
+  "entry": "src/style-directions.tsx",
+  "composition": "StyleDirections",
+  "dimensions": [1920, 1080],
+  "fps": 30,
+  "duration_frames": 540,
+  "audio": "none",
+  "note": "原创文案与程序图形，非历史证据，非用户正式成片。三段测试用于验证机制，不是要求将三套风格混入一片。用户选型交统一体系5页PDF。",
+  "references": [
+    {"source_id":"lemo-opuscar","path":"styles/archive-lighttable/STYLE.md","adaptation":"FocusLens从同一SVG源坐标放大；未复制上游代码"},
+    {"source_id":"mg-styles-15","path":"prompts/08-morph.md","adaptation":"morphContour保持顶点数量与顺序；原创轮廓和关键帧"},
+    {"source_id":"video-shotcraft","path":"SKILL.md","adaptation":"DepthDirection用统一相机处理2.5D素材层，不宣称复现具体镜头卡"}
+  ],
+  "verification": {
+    "checked_at":"2026-10-17",
+    "typecheck":"passed",
+    "render":"passed; H264 High, 1920x1080, 30fps, 540 frames, Rec709, no audio",
+    "same_frame_rerender":"ArchiveDirection frame 115 PNG SHA256 matched after rendering another composition",
+    "visual_review":"three settled frames inspected; archive heading wrap corrected; morph intermediate frame inspected",
+    "realtime_playback_review":"not_performed",
+    "limits":"This does not verify every frame, upstream demo, historical fact or production audio synchronization."
+  }
+}

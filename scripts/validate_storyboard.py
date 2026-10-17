@@ -23,6 +23,14 @@ def validate_v3_policy(data: dict) -> list[str]:
         "review": {"storyboard_approval_required": False, "word_language": "zh", "pdf_aspect": "16:9",
                    "english": "placeholder_until_zh_revision"},
     }
+    overrides = policy.get("overrides", {})
+    if not isinstance(overrides, dict):
+        fail("overrides must map field paths to the user's instruction")
+        overrides = {}
+    known = {f"{section}.{key}" for section, fields in expected.items() for key in fields}
+    for path, instruction in overrides.items():
+        if path not in known or not isinstance(instruction, str) or not instruction.strip():
+            fail(f"invalid override {path!r}: use a known field and nonempty user instruction")
     for section, fields in expected.items():
         actual = policy.get(section)
         if not isinstance(actual, dict):
@@ -32,8 +40,34 @@ def validate_v3_policy(data: dict) -> list[str]:
             found = actual.get(key)
             valid = (found is value if isinstance(value, bool) else
                      number(found) and found == value if isinstance(value, (int, float)) else found == value)
-            if not valid:
-                fail(f"{section}.{key} must be {value!r} under the v3 default policy")
+            field = f"{section}.{key}"
+            authorized = isinstance(overrides.get(field), str) and bool(overrides[field].strip())
+            if not valid and not authorized:
+                fail(f"{field} must be {value!r} by default, or record a user override")
+            type_ok = (isinstance(found, bool) if isinstance(value, bool) else
+                       number(found) if isinstance(value, (int, float)) else
+                       isinstance(found, str) and bool(found.strip()))
+            if not type_ok:
+                fail(f"{field} has invalid type/value")
+    sub_policy = policy.get("subtitles", {})
+    ai_policy = policy.get("ai_video", {})
+    presenter = policy.get("presenter", {})
+    sub_policy = sub_policy if isinstance(sub_policy, dict) else {}
+    ai_policy = ai_policy if isinstance(ai_policy, dict) else {}
+    presenter = presenter if isinstance(presenter, dict) else {}
+    if sub_policy.get("mode") not in ("off", "burned", "external"):
+        fail("subtitles.mode must be off, burned or external")
+    for key, minimum, inclusive in (("source_in_seconds", 0, True), ("duration_seconds", 0, False), ("playback_rate", 0, False)):
+        value = ai_policy.get(key)
+        if not number(value) or (value < minimum if inclusive else value <= minimum):
+            fail(f"ai_video.{key} is out of range")
+    plays = ai_policy.get("plays")
+    if not isinstance(plays, int) or isinstance(plays, bool) or plays < 1:
+        fail("ai_video.plays must be a positive integer")
+        plays = 1
+    opening = presenter.get("opening_fullscreen_seconds")
+    if not number(opening) or opening < 0:
+        fail("presenter.opening_fullscreen_seconds must be nonnegative")
     sub = policy.get("subtitles", {})
     area = sub.get("safe_area") if isinstance(sub, dict) else None
     if not isinstance(area, dict) or not all(number(area.get(k)) for k in ("x", "y", "width", "height")):
@@ -61,8 +95,8 @@ def validate_v3_policy(data: dict) -> list[str]:
             if not all(isinstance(v, str) and v.strip() for v in (tid, role, zh)):
                 fail(f"{sid}.texts requires stable id, content role and Chinese text")
                 continue
-            if role in ("subtitle", "subtitle_zh", "subtitle_en", "narration_subtitle", "narration"):
-                fail(f"{sid}/{tid}: narration/subtitle text cannot be projected in subtitle-off mode")
+            if role == "narration" or (role in ("subtitle", "subtitle_zh", "subtitle_en", "narration_subtitle") and sub_policy.get("mode") != "burned"):
+                fail(f"{sid}/{tid}: narration/subtitle projection conflicts with the project subtitle policy")
             if tid in local_ids:
                 fail(f"{sid}: duplicate text id {tid}")
             local_ids.add(tid)
@@ -84,20 +118,25 @@ def validate_v3_policy(data: dict) -> list[str]:
             if not all(isinstance(v, str) and v.strip() for v in (aid, pid)):
                 fail(f"{sid}: AI video needs asset_id and playback_id")
                 continue
-            for key, expected_value in (("source_in_seconds", 0), ("source_out_seconds", 10), ("playback_rate", 1)):
+            source_in = ai_policy.get("source_in_seconds", 0)
+            source_duration = ai_policy.get("duration_seconds", 10)
+            rate = ai_policy.get("playback_rate", 1)
+            if not all(number(v) for v in (source_in, source_duration, rate)) or rate <= 0 or source_duration <= 0:
+                continue
+            for key, expected_value in (("source_in_seconds", source_in), ("source_out_seconds", source_in + source_duration), ("playback_rate", rate)):
                 if not number(layer.get(key)) or layer[key] != expected_value:
-                    fail(f"{sid}/{aid}: {key} must be {expected_value}; play the full 10 seconds once")
+                    fail(f"{sid}/{aid}: {key} must match project policy ({expected_value})")
             start, end, fps = layer.get("visible_start_frame"), layer.get("visible_end_frame_exclusive"), data.get("fps")
-            if not all(number(v) for v in (start, end, fps)) or end - start != 10 * fps:
-                fail(f"{sid}/{aid}: AI video playback window must cover exactly 10 seconds")
+            if not all(number(v) for v in (start, end, fps)) or abs((end - start) - source_duration / rate * fps) > 0.500001:
+                fail(f"{sid}/{aid}: playback window must match source duration / rate, rounded to a frame")
             signature = (aid, start, end, layer.get("source_in_seconds"), layer.get("source_out_seconds"),
                          layer.get("playback_rate"), layer.get("path"), layer.get("availability"))
             if pid in playbacks and playbacks[pid] != signature:
                 fail(f"{pid}: cross-scene playback must keep the same source and global clock")
             playbacks[pid] = signature
-            if aid in asset_plays and asset_plays[aid] != pid:
-                fail(f"{aid}: repeated AI video playback is not allowed")
-            asset_plays[aid] = pid
+            asset_plays.setdefault(aid, set()).add(pid)
+            if len(asset_plays[aid]) > plays:
+                fail(f"{aid}: AI video playback count exceeds project policy ({plays})")
     return errors
 
 def validate(data: object, root: Path | None = None) -> dict:

@@ -1,53 +1,41 @@
-# Remotion 统一制作与验证
+# Remotion制作与验收
 
-全部新动画及最终合成用Remotion。参考项目帮助设计，不接管工作流。接口以实际安装版本与[官方文档](https://www.remotion.dev/docs)为准；`assets/remotion-kit/`是本次原创、可运行的组件起点，项目可直接扩展，不限定使用比例。
+## 工程
 
-## 工程入口
+新工程把 `assets/remotion-kit/` 复制到独立制作目录；有锁文件用 `npm ci`，已有工程直接适配组件。所有Remotion包保持同一版本，核对实际API后再采用上游代码。生产素材和字体建立本地映射并等待加载，渲染不依赖实时网络。
 
-开始制作计划先执行[开工缺项提醒](preflight-and-notices.md)。Remotion能运行与参考已补齐分别检查：不能用编译成功掩盖缺少Shotcraft/其他参考或插件；先提醒用户处理，再按回应推进。
+基础演示 `MotionStudy` 为1920×1080／60fps／16秒／无声；仅演示机制。真实项目须实现Master Composition、场景与独立媒体轨，并记录入口和参数。现有 `build_render_plan.py` 读取project.json及04_spec/video-spec.json，scene.start/end用连续母版秒数。
 
-新项目可复制`assets/remotion-kit`到项目的独立制作目录，运行`npm ci`（已有锁文件）或`npm install`，再`npm run typecheck`、`npm run studio`、`npm run render:demo`。依赖装在项目，不在Skill目录。已有Remotion工程优先接入组件和场景数据，不覆盖其锁文件或源码。演示Composition为MotionStudy，1920×1080/60fps/960帧/无音轨；程序绘制内容非史料，仅展示机制。演示使用Windows微软雅黑；跨机需选择已有授权且包含中文字形的本地字体再验画，模板不包含第三方字体文件。
+`npm run typecheck` 检查类型；`npm run studio` 预览；`npm run render:demo` 渲基础演示。只做文字任务时不安装或渲演示；新视觉组件用代表静帧／短试片验证，不重渲无关全片。
 
-这些安装/预览命令供实际执行阶段按需使用，不是计划阶段的必跑步骤。计划不生成动态模板；用户要求16:9文字PDF时可单独创建静态审阅入口，采样既定模组的入场/落定关键状态，禁止误把静态审阅帧序列编码成“成片”。
+## 时间与媒体
 
-组件包演示的是机制，不是通用一键全片渲染器。制作真实视频时，按分镜建立Master Composition、场景与独立媒体层；需要现有`build_render_plan.py`时输出`project.json`和`04_spec/video-spec.json`，scene的start/end为连续母版秒数。实际工程入口、Composition ID和参数写入交接。
+frame/fps是唯一时钟。区分母版帧和Sequence局部帧；状态纯计算，固定随机种子。Canvas每帧复位并重建，累积模拟先预计算再采样。Three.js与Lottie读取同一时间，不运行独立动画循环。新程序化组件比较不同seek顺序下的相同帧。
 
-所有Remotion包锁在同一版本。升级不是让旧模板运行的默认办法，先核实已有项目版本。官方参考代码可能比本机更新，使用前编译验证。
+原声、AI视频、真人、图片与文字独立轨；换文字或全屏收窗不重置媒体。项目策略读[默认值](production-defaults.md)。字幕安全区由实际布局避让，不能仅在JSON声明。
 
-## 时间和确定性
+转场重叠只计算一次。TransitionSeries会缩短相邻序列的并集；固定母版预算也可用全局Sequence中的mask／共享对象转场。相邻媒体在淡化区间仍有可播放源帧；不能同时透明闪底。细节见[连续性](playback-continuity.md)。
 
-- 所有变化来自`useCurrentFrame()`、`useVideoConfig()`以及显式的全局/局部起点。frame/fps是唯一时钟；`Sequence`中的frame是局部帧，要与母版帧明确转换。
-- 状态以frame纯计算；不用`Date.now`、未固定seed的随机数、CSS animation/transition、setInterval、requestAnimationFrame或独立GSAP/Motion时钟推动动画。
-- Canvas每帧清空并从固定事件表重建该时刻，随机访问结果与顺序播放一致。需要累积物理模拟时先确定性预计算，再按frame采样。
-- Three.js动画读取Remotion frame，禁止独立useFrame累计delta。Lottie使用`@remotion/lottie`；SVG描边、形变、粒子同样受frame控制。
-- 中文字体本地化并等待加载。生产素材先建立稳定本地映射，渲染过程中不依赖实时网络。图片解码、字体和异步数据的准备通过Remotion等待机制管理。
+## 从参考到可用组件
 
-## 原声与镜头共存
+地图、数据、图解、手绘、口播同步、拼贴与标志动作按[内容模块](content-motion-modules.md)路由；相应支持按[安装清单](installation-and-support.md)补齐。D3／Rough／Mermaid提供运算或SVG，不引入独立播放时钟。
 
-用户录音是时长权威；文案是叙事权威；时间戳是定位资料。图片/真人/AI视频/文字各自独立轨，不因文字换页重播源视频。
+保留参考机制的关键形态／速度关系，并按本句阅读量改编。Canvas／WebGL上游实现移植后验证乱序采样；依赖、纹理与字体同步到制作工程。复用代码保留上游许可和改动说明。
 
-项目策略默认 `subtitles.mode=off`、`reserve_space=true`；正式Composition不挂载逐句CN/EN字幕组件，封装不写字幕流。SRT读取层与屏显注册表分开，旧SUB字段即使保留在档案也不投屏。真正需要的标题/摘句/说明仍通过文字注册表渲染。字幕安全区由布局读取并避让，不能仅在JSON写字段。开头真人连续0–15秒全屏，之后右下小窗由同一源时钟控制；AI视频每条源0–10秒正常播放一次。
+基础组件：SharedElement、MediaCard、TracePath、TornMatte、MonochromeLight、Dust、RevealText。配方中的水墨、真实3D、图表等需按项目补实现。CSS blur只能标近似；真实运动模糊按当前Remotion版本验证，避免快门采样跨硬切污染。
 
-`TransitionSeries`会使相邻段重叠，不能将已经确定的总时长再减一次。可在固定全局Sequence窗口内自绘mask/共享对象转场；若用TransitionSeries，明确重叠计入方式。crossfade后媒体可播放范围仍要覆盖每一帧。官方说明：[TransitionSeries](https://www.remotion.dev/docs/transitions/transitionseries)。
+3.1另附`src/style-directions.tsx`：FocusLens同源坐标放大、morphContour等拓扑轮廓插值，以及三个原创方向样片。Composition为ArchiveDirection、MorphDirection、DepthDirection（各6秒）或StyleDirections（三段合计18秒），1920×1080／30fps／无声。示范的港口、航线和文案均非历史证据；这是机制起点，不是所有影片的固定模板。
 
-生成画面的落点跟随说出的概念，音乐节拍用于细化；不为卡点改写原声。句级SRT不等于逐词数据。保留源入点、素材母版起点及预挂载区间，详见playback-continuity.md。
+`npx remotion render src/index.tsx StyleDirections out/style-directions.mp4 --codec=h264 --muted --color-space=bt709`。追溯与实测范围见工程的`style-directions-usage.json`。
 
-## 性能与画质
+## 画面检验与完成
 
-用真实镜头测试较重的粒子、SVG滤镜、模糊和3D。纸纹/笔触等不变部分可缓存，保留全局采样一致性。景深和光晕不要糊住证据；运动模糊只在相应层和运动窗口启用。
+1. 结构：`validate_storyboard.py`查原句关联、连续帧段、媒体窗口和声明策略；不证明审美或实际像素。
+2. 静帧：选关键动作前中后、落定、转场中帧，看中文、证据、遮挡、边缘、安全区及所选风格识别特征。
+3. 动态：看包含复杂交接的连续代表片段，检查速度、注意力、原声落点、黑闪／跳帧。全片成片任务还检查全片叙事与音轨；只有连续帧采样能力时明确检查范围，不能冒称实时播放。
+4. 修复：按影响排序记录时间码、可见缺陷、改法和复检结果；严重缺陷清除且请求的完成标准满足后交付，不无限追求自评分。
+5. 输出：核对总帧数、规格、音轨及实际可见媒体使用表。按真实指纹续跑，输出报告未做的检查。
 
-Remotion当前支持多种[motion blur](https://www.remotion.dev/docs/motion-blur)实现，接口和浏览器能力随版本变化。先验证再采用；CSS高斯模糊/拖影只标为近似。不要跨硬切混合前后镜的快门样本。
+`verify_master_media.py --width W --height H --fps FPS --audio none/required/either --expected-frames N`用于H.264 High／Rec.709 MP4技术检查，参数来自项目，旧1440p60静音默认不限制其他交付。
 
-GPU编码、浏览器合成和滤镜加速分开检查。生产段顺序执行，并发从低值实测提高，资源不足先降低并发，不擅自降交付规格或删素材。
-
-## 验证：技术与审美分别成立
-
-1. **分镜检查**：每镜原句对应、主要参考、具体机制、前后接力、时间与素材均明确。`scripts/validate_storyboard.py`检查结构和帧区间，不宣称能评审审美。
-2. **构图检查**：开头、关键动作前中后、落定和转场中间帧；看中文字形、重叠、边缘、证据、人物遮挡、字幕安全区及来源真实性。静态文字审阅检查覆盖所有屏显字段；素材内可辨识文字也登记或记录待转写，不能称全部文字已审而漏掉地图图例。
-3. **动态检查**：至少一段连续的代表片段，含复杂素材交接；核对速度、注意力、强弱、黑闪/跳帧和原声落点。只看静帧不能认证节奏。
-4. **可复现检查**：对新Canvas/WebGL/程序化组件，将同一frame按不同seek顺序生成并比较；分段输出和整段参考在接缝一致。
-5. **完整制作**：按输入/代码指纹续跑；正式输出核验总帧数、音轨、规格和素材实际可见清单。`verify_master_media.py --width W --height H --fps FPS --audio none/required/either --expected-frames N`按当前规格检查H.264 High/Rec.709 MP4；不把其旧1440p60静音默认当全片限制。其他编码规格按实际交付单检查。只能以实际输出宣称完成。
-
-视觉评审问：动作是否让文案更容易理解？素材是否相互接住？是否有鲜明但不妨碍阅读的亮点？层次、材质和镜头是否精细？有没有只是“每图推近+标题弹出”的长段？发现问题回修具体镜头并重看。
-
-未来交付含原源码/配置、当前锁文件、实际渲染入口、分镜与参考采用记录、需要的音轨/录制包，以及本次用户指定的成片或审阅格式。未经动态观察的输出标“渲染完成，动态审阅待做”，不宣称达到某频道或顶尖YouTube质量。
+重滤镜、粒子、3D先用真实镜头测耗时，静态纹理可缓存。长片顺序分段，资源不足先降低并发；预览规格和正式规格分别记录。最终交本次要求的文件、可复跑源码／锁文件、分镜／风格与采用记录；有待检查项就准确注明。

@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "skill": "jianji-zhushou",
+  "display_name": "jianji-zhushou 3.0",
+  "runtime": {
+    "python": {
+      "minimum": "3.10",
+      "recommended": "3.11 or 3.12",
+      "note": "Use a project virtual environment or the Codex bundled interpreter; report the interpreter being checked."
+    },
+    "node": {
+      "minimum": "18.0",
+      "recommended": "22 or 24 LTS"
+    },
+    "commands": [
+      "node",
+      "npm",
+      "npx",
+      "ffmpeg",
+      "ffprobe"
+    ],
+    "reference_tools": [
+      "git"
+    ],
+    "remotion_kit": "assets/remotion-kit/package.json",
+    "note": "Read exact core npm versions from the kit; preserve existing project locks and keep all @remotion packages on the same version."
+  },
+  "features": {
+    "core": {
+      "label": "基础渲染与媒体",
+      "python": [],
+      "npm": [],
+      "skills": [],
+      "sources": [
+        "remotion-official",
+        "xilo-opus-video",
+        "mg-styles-15",
+        "dashi-animationstyle",
+        "wtt-code-animation-studio",
+        "video-shotcraft",
+        "herk-edit-kit"
+      ]
+    },
+    "documents": {
+      "label": "5页风格PDF与中文Word",
+      "python": [
+        {
+          "distribution": "python-docx",
+          "requirement": "python-docx>=1.1"
+        },
+        {
+          "distribution": "reportlab",
+          "requirement": "reportlab>=4"
+        },
+        {
+          "distribution": "pypdf",
+          "requirement": "pypdf>=5"
+        },
+        {
+          "distribution": "pdfplumber",
+          "requirement": "pdfplumber>=0.11"
+        },
+        {
+          "distribution": "Pillow",
+          "requirement": "Pillow>=10"
+        }
+      ],
+      "npm": [],
+      "skills": [
+        "pdf",
+        "documents"
+      ],
+      "sources": []
+    },
+    "images": {
+      "label": "GPT生图与素材扩展",
+      "python": [],
+      "npm": [],
+      "skills": [
+        "imagegen"
+      ],
+      "sources": [
+        "lemo-opuscar",
+        "huashu-art-motion"
+      ]
+    },
+    "maps": {
+      "label": "地理与路线",
+      "python": [],
+      "npm": [
+        {
+          "name": "d3",
+          "spec": "d3@7.9.0"
+        },
+        {
+          "name": "@types/d3",
+          "spec": "@types/d3",
+          "dev": true
+        }
+      ],
+      "skills": [],
+      "sources": [
+        "iart-map-animation"
+      ]
+    },
+    "charts": {
+      "label": "数据图表",
+      "python": [],
+      "npm": [
+        {
+          "name": "d3",
+          "spec": "d3@7.9.0"
+        },
+        {
+          "name": "@types/d3",
+          "spec": "@types/d3",
+          "dev": true
+        }
+      ],
+      "skills": [],
+      "sources": [
+        "iart-data-animation",
+        "prompt-motion-charts"
+      ]
+    },
+    "diagrams": {
+      "label": "关系图、白板与拆层",
+      "python": [],
+      "npm": [
+        {
+          "name": "mermaid",
+          "spec": "mermaid@12.2.0"
+        },
+        {
+          "name": "roughjs",
+          "spec": "roughjs@4.6.6"
+        }
+      ],
+      "skills": [],
+      "sources": [
+        "iart-explainer-video"
+      ]
+    },
+    "doodle": {
+      "label": "手绘角色与程序动画",
+      "python": [],
+      "npm": [
+        {
+          "name": "roughjs",
+          "spec": "roughjs@4.6.6"
+        }
+      ],
+      "skills": [],
+      "sources": [
+        "doodle-anim",
+        "iart-javascript-animation"
+      ]
+    },
+    "collage": {
+      "label": "拼贴镜头",
+      "python": [],
+      "npm": [],
+      "skills": [
+        "imagegen"
+      ],
+      "sources": [
+        "vox-director",
+        "huashu-art-motion",
+        "dashi-animationstyle"
+      ]
+    },
+    "logo": {
+      "label": "标志SVG与上游几何检查",
+      "python": [
+        {
+          "distribution": "Pillow",
+          "requirement": "Pillow>=10"
+        },
+        {
+          "distribution": "numpy",
+          "requirement": "numpy"
+        },
+        {
+          "distribution": "playwright",
+          "requirement": "playwright"
+        }
+      ],
+      "npm": [],
+      "skills": [],
+      "sources": [
+        "pixel2motion"
+      ]
+    },
+    "asr": {
+      "label": "已有录音重新对齐（无合适时码时）",
+      "python": [
+        {
+          "distribution": "faster-whisper",
+          "requirement": "faster-whisper"
+        },
+        {
+          "distribution": "numpy",
+          "requirement": "numpy"
+        },
+        {
+          "distribution": "soundfile",
+          "requirement": "soundfile"
+        }
+      ],
+      "npm": [],
+      "skills": [],
+      "sources": [
+        "video-talkcraft"
+      ]
+    },
+    "review": {
+      "label": "运动与性能审查",
+      "python": [],
+      "npm": [],
+      "skills": [],
+      "sources": [
+        "emil-design-skills"
+      ]
+    }
+  },
+  "skill_catalog": {
+    "imagegen": {
+      "purpose": "原创位图生成／编辑",
+      "paths": [
+        "skills/.system/imagegen/SKILL.md"
+      ],
+      "availability": "Check the live image tool as well as the skill file; no API key is required for the built-in tool."
+    },
+    "pdf": {
+      "purpose": "5页风格审阅和文字画面PDF",
+      "paths": [
+        "plugins/cache/openai-primary-runtime/pdf/*/skills/pdf/SKILL.md",
+        "skills/pdf/SKILL.md"
+      ],
+      "availability": "A missing plugin skill can be added with its PDF plugin; do not claim a file proves the rendering tool is available."
+    },
+    "documents": {
+      "purpose": "中文文字Word与录制文稿",
+      "paths": [
+        "plugins/cache/openai-primary-runtime/documents/*/skills/documents/SKILL.md",
+        "skills/documents/SKILL.md"
+      ],
+      "availability": "Use the Documents plugin skill and its bundled runtime when available."
+    }
+  },
+  "conditional_skills": [
+    {
+      "id": "yu-yin-sheng-cheng",
+      "when": "需要生成或重做用户指定的克隆旁白；仅使用已有录音时不调用",
+      "path": "skills/yu-yin-sheng-cheng/SKILL.md"
+    },
+    {
+      "id": "spreadsheets",
+      "when": "需要编辑、核算或回写复杂XLSX；普通CSV读取不需要",
+      "path": "plugins/cache/openai-primary-runtime/spreadsheets/*/skills/spreadsheets/SKILL.md"
+    }
+  ],
+  "external_services": {
+    "required": [],
+    "note": "Vox collage design is adapted using the available image tool and Remotion. Atlas Cloud, Fish Audio and voice cloning models are optional project choices, not installation prerequisites."
+  }
+}

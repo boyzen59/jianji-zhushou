@@ -1,58 +1,60 @@
-# 用户收录动效参考的选用
+# 视觉参考路由
 
-核查日期：2026-10-14。这里是设计分镜和动效时的首要参考索引，不是安装任务清单。文案决定讲什么，参考帮助决定如何表现。先查下表相关具体文件，再把机制、取舍及实际实现记录进分镜；已缓存的资料可直接读。当前集成的是经过筛选的工作方法和本Skill原创Remotion组件，不意味着所有外部引擎/样片已安装或测试。
+新片分析先扫描本页全部重点来源、内容模块与已有补充参考，再依文案选择需要深入的具体文件。重点来源为17个Git仓库及1个网页案例索引（2026-10-17核对），版本与许可见[motion-sources.json](motion-sources.json)。全量考虑不等于全部使用，也不要求安装整套外部Skill。用`query_motion_library.py --catalog`取得完整清单，按[导演流程](storyboard-direction.md)记录文案适配依据。
 
-## 优先进入设计工作的来源
+## 风格、编排与镜头来源
 
-| 来源与读取位置 | 适用阶段与借鉴点 | 在本工作流中怎样使用 |
+| 来源 | 具体读取入口 | 采用方式 |
 |---|---|---|
-| [remotion-dev/skills](https://github.com/remotion-dev/skills)，skills/remotion-markup/{timing,transitions,motion-blur,3d}.md | 实现、时间轴、媒体和随机访问 | 当前版本API为准；统一frame，核对转场重叠与时长；不继承默认字幕 |
-| [huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion)，references/动画语法/y2_vox.md、y6_presenter_explainer.md、镜头表模板.md | 解说分镜、艺术材质、具象动作、讲解员与图形互动 | 把画面里的“物与动作”及拼贴/绘制机制移植成帧驱动SVG/Canvas；不采用其独立渲染器、角色素材与每镜字数/时长硬限制 |
-| [motion-video-kit](https://github.com/echris6/motion-video-kit)，business-motion-film/references/motion-grammar.md、quality-bar.md | 前后镜的对象延续、构图层级、结果检查 | 设计同一对象的状态接力与因果变化；把短广告的强度调到中文长解说；不继承商业CTA或静止秒数阈值 |
-| [motion-graphics-skills](https://github.com/charlie947/motion-graphics-skills)，skills/{vox-explainer,motion-effects,reference-to-motion}/SKILL.md | 拼贴、视觉参考拆解、图形状态变化 | 学习实物/证据组织、形变和素材揭示；用Remotion重写，不强制网点、禁用光效或8秒循环 |
-| [motion-graphics](https://github.com/Barty-Bart/motion-graphics)，skills/motion-broll/SKILL.md | 口播与补充画面同步 | 每段选择关键词落点、全屏/局部/真人留场；保留已有音轨；不强制鼠标UI、“一形永不切”或尾帧冻结 |
-| [claude-remotion-skill](https://github.com/haidrrrry/claude-remotion-skill)，remotion-motion-graphics/references/motion-patterns.md | Remotion组件、错峰、揭示、图层处理 | 取适配组件机制并实测；不继承“每图Ken Burns、每元素呼吸、禁止所有线性运动” |
-| [klik-anim-skill-creation](https://github.com/t3knobox/klik-anim-skill-creation)，klik-anim/SKILL.md、klik-cam/SKILL.md | 注意力、镜头强度、运动与阅读安排 | 将观看路径、速度峰值、焦平面和主体避让写成镜头字段；不复制整套全局限制或宣称其代码已获复用许可 |
-| [iart-ai/motion-design-skills](https://github.com/iart-ai/motion-design-skills)，skills/{motion-art-direction,shot-composition,color-motion}/SKILL.md | 视觉导演、构图、色彩和运动主次 | 建项目风格令牌与能量曲线；不把单一缓动/唯一高潮等偏好变成全片硬规则 |
-| [LottieFiles/motion-design-skill](https://github.com/LottieFiles/motion-design-skill)，skills/motion-design/director/{choreography,decision-framework}.md | 主体和辅助动作编排 | 建立动作优先级、错峰及层间速度差；Lottie是可选资产，由Remotion控制播放 |
-| [product-launch-motion](https://github.com/AbubakrChan/product-launch-motion)，SKILL.md、references/technique.md | 物体状态连续、运动细节、视觉高潮 | 借鉴容器与内容分别编排、快出慢入等机制；去掉作者私人工程、产品鼠标操作、音乐优先与强制不切镜 |
-| [claude-motion](https://github.com/whaleyxbt/claude-motion)，.claude/skills/motion-design 与 review-loop | 统一事件时间表、动效自查、音效cue | 画面、音效和检查共用cue；声音按需要，渲染只用Remotion |
+| [xilo-opus-video](https://github.com/Kianzzz/xilo-opus-video) | `skills/xilo-opus-video/SKILL.md`；`references/plan-format.md`位于该技能目录 | 内部比较必要的构图／材料／叙事方向，以代表预览检验选择；对用户按本技能约定交统一体系的5页PDF，不强制三种风格或视频菜单 |
+| [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | `styles/README.md` → `styles/<slug>/STYLE.md` | 材质、光照、相机和风格识别特征；当前索引51种。历史证据优先查archive-lighttable、halftone-dossier；艺术表达查ink-wash、engraving等。先确定本片叙事再读demo |
+| [mg-styles-15](https://github.com/Vincentwei1021/mg-styles-15) | `prompts/<id>.md` → `demos/<id>/`；`rubric.md` | 15种MG的识别特征、变形和运动细节。重点查08-morph、06-collage、02-line-art、03-isometric、05-cel-boil；提示词与源码是研究材料，10秒样片不是本片时长 |
+| [dashi-animationstyle](https://github.com/chuspeeism/dashi-animationstyle) | `SKILL.md`、`knowledge/风格卡模板.md`；`styles/<风格>/风格卡.md` | 口播概念变可见事件，颜色／字体／质感形成风格卡。七套成套模板与研究条目分开；15–60秒是上游使用定位，不限制本片长度 |
+| [huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion) | `references/风格配方/INDEX.md`、`references/09-视频动画语法.md` → 指定风格卡或`动画语法/y2_vox.md`、`y6_presenter_explainer.md` | 艺术材料与9种解释语法；区分实做、研究配方和已移植组件。艺术元素本身的运动与解释动作结合 |
+| [wtt-code-animation-studio](https://github.com/WaterDJiang/Wattter_openSkills/tree/main/wattter_skills/wtt-code-animation-studio) | 技能内`SKILL.md`、`references/story-and-timing.md`、`references/visual-recipes.md` | 个人非商业场景可选。借鉴从想法到可视动作的拆解、主体身份、声音与画面共用事件数据；已有定稿与录音时跳过重写／配音，衔接本技能场景数据 |
+| [video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | `gallery/api/library.json` → `references/shots/<id>.md` → 卡中指定demo源码 | 2.5D运镜、素材卡聚焦、堆叠与空间交接。将产品页面换为实际证据素材；卡名／style-key须解析，不能仅凭名称声称复现 |
+| [Herk Edit Kit](https://github.com/nateherkai/herk-edit-kit) | `.agents/skills/style-library/SKILL.md` → `style-library/GUIDE.md`、`registry.json` → 所选风格的DESIGN.md／tokens.css／style.json | 原HyperFrames Student Kit；406张草稿卡。提取贯穿主体、共享设计参数、按目的检索、文字槽位与透明叠加；适配为Remotion，不继承固定黑底、快切、强制持续运动或AIS品牌 |
+| [Prompt Motion · Charts](https://prompt-motion.com/?tag=charts) | 图表分类 → 具体案例页 → 原作者／源码；本地`prompt-motion-charts/index.json`可检索 | 当前33个分类条目。已读[纸本图表](https://prompt-motion.com/ik-builds-b8bdcf)及[令牌桶机制](https://prompt-motion.com/parkerrex-1a54fe)文本；提取共享参数、状态演化与图解方法。网站不是可导入代码库，原视频未逐条观看 |
 
-## 有条件借鉴，先移植再使用
+Wtt上游根README声明CC BY-NC-SA 4.0；保留来源、署名及适用许可。个人身份不会自动改变许可；本技能不额外添加禁用或逐次确认门槛。改编／分发第三方内容时保留其许可，不把同一许可套给用户所有原创成片。Dashi示例配音不在其MIT许可内；实际生产沿用用户原声。
 
-| 来源 | 保留用途 | 不进入主流程的部分 |
+## 内容表达与运动检查来源
+
+具体适配与确定性时间轴规则见[内容模块](content-motion-modules.md)，支持包见[安装清单](installation-and-support.md)。
+
+| 来源 | 具体读取入口 | 由文案触发的采用方式 |
 |---|---|---|
-| [cth9191/animate](https://github.com/cth9191/animate) | 剪纸/网点/手绘材质、风格帧比较、物体变形衔接 | 单Canvas播放器、独立录制引擎、层层等待批准 |
-| [hyperframes-motion-reel-skill](https://github.com/Sunwood-ai-labs/hyperframes-motion-reel-skill) | 跨镜形态链、高潮层级、事件网格 | HyperFrames执行、固定BPM、音乐覆盖口播 |
-| [claude-motion-design](https://github.com/howseen-ai/claude-motion-design) | 确定性、对象交接、转场中帧检验 | HTML/Playwright生产渲染器、逐帧复制他人作品 |
-| [hyperframes-student-kit](https://github.com/nateherkai/hyperframes-student-kit) | 按语义查参考卡、贯穿母题、素材审核 | 卡片是草稿不是验收成品；不移入整套引擎和默认字幕 |
-| [GSAP](https://github.com/greensock/GSAP)、[Motion](https://github.com/motiondivision/motion)、[motion-dev-animations-skill](https://github.com/199-biotechnologies/motion-dev-animations-skill) | 缓动、状态变形和轨迹思路 | 网页hover/scroll和自主动画时钟；实现优先Remotion原生，必要适配亦须逐帧可seek |
-| [lottie-web](https://github.com/airbnb/lottie-web) | 有合适授权的现成矢量动画 | 用@remotion/lottie接入，不直接autoplay；装播放器不等于有可用资产 |
-| [pixel2motion](https://github.com/nolangz/pixel2motion) | 用户确有图标/徽记时，分语义SVG、先核对轮廓再动画 | 不把历史照片全转SVG；不复制未核实许可的代码或品牌标志 |
-| [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 按当前叙事挑选电影材质、镜头风格与技术说明 | 默认重新编故事、TTS、Canvas/WebGL独立成片管线 |
-| [PDoomVideo](https://github.com/JohnHeibel/PDoomVideo) | 程序绘制、按时间求帧的结构案例 | 音乐MV剧情、歌词、角色与p5渲染管线 |
-| [digitalsamba/claude-code-video-toolkit](https://github.com/digitalsamba/claude-code-video-toolkit) | Remotion工程组织、场景审阅与品牌配置思路 | 云GPU/配音/模型API/整套全局安装，不因参考项目而替换用户录音 |
+| [iart-map-animation](https://github.com/iart-ai/map-animation-skills) | `skills/map-animation/SKILL.md` | 地点、路线、疆域、迁徙：真实坐标／GeoJSON，frame驱动地图与路径 |
+| [iart-data-animation](https://github.com/iart-ai/data-animation-skills) | `skills/chart-animation/SKILL.md`、`skills/animated-infographic/SKILL.md` | 数量比较、趋势和排名：D3算几何，React绘图，同一数据驱动标记和标签 |
+| [iart-explainer-video](https://github.com/iart-ai/explainer-video-skills) | `skills/diagram-animation/SKILL.md`、`skills/whiteboard-animation/SKILL.md`、`skills/isometric-animation/SKILL.md` | 因果、流程、结构：节点／边／层逐步解释，Mermaid结构稿与手绘须重套本片tokens |
+| [iart-javascript-animation](https://github.com/iart-ai/javascript-animation-skills) | `skills/javascript-animation/SKILL.md` | 可程序表达的物体与事件：移植纯时间绘制函数，不启动独立播放循环 |
+| [doodle-anim](https://github.com/Feitangyuan/doodle-anim) | `SKILL.md` | 人物动作解释概念：固定角色身份、骨架、步态与事件，外观服从全片风格 |
+| [video-talkcraft](https://github.com/Vincentwei1021/video-talkcraft) | `SKILL.md`、`references/taxonomy.md`、`references/design-language.md` | 原声语义拍与多素材编排；可靠时码可直接复用，不强制ASR、删停顿或恢复字幕 |
+| [vox-director](https://github.com/Alisa0808/vox-director) | `SKILL.md`、`references/prompt-guide.md`、`references/beat-layer.md` | 图片并置、拼贴与生成图扩展：先建立静态阅读路径，再用Remotion编排层次；不必安装其外部付费服务 |
+| [pixel2motion](https://github.com/nolangz/pixel2motion) | `SKILL.md` | 标志／徽记成为动作对象：保留身份、低复杂度SVG、检查轮廓与中间态；已有矢量优先直接使用 |
+| [emil-design-skills](https://github.com/emilkowalski/skills) | `skills/animate/SKILL.md`、`skills/review-animations/SKILL.md`、`skills/animation-performance/SKILL.md` | 审查运动目的、缓动、连续性和真实渲染性能；网页交互规则不无差别移入视频 |
 
-## 检索来源和暂不集成项
+上述新增来源已核对文本方法；缓存可读不代表已移植代码或已观看全部演示。Talkcraft采用PolyForm Noncommercial许可，其他许可以固定版本文件为准。
 
-- [awesome-motion-design-agent-skills](https://github.com/frankxai/awesome-motion-design-agent-skills)、[opus-video-prompts](https://github.com/joeseesun/opus-video-prompts)、[awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos)、[Prompt Motion](https://prompt-motion.com/?tag=charts)：仅用于找到具体案例。索引、提示词和网站不是已就绪组件；本次Prompt Motion页面读取失败，不能声称已经学习其图表代码。
-- [Remotion](https://github.com/remotion-dev/remotion)是生产框架；[HyperFrames](https://github.com/heygen-com/hyperframes)是另一框架，只研究设计，不装作本片第二引擎。
-- [video-talkcraft](https://github.com/Vincentwei1021/video-talkcraft)：叙事对齐很相关，但当前LICENSE为PolyForm Noncommercial并要求商业使用事先授权；本次不复制/封装其工具或配方。口播对齐由本Skill自有规则及其他已核实来源实现，制作不依赖该项目。
-- [OpenMontage](https://github.com/calesthio/OpenMontage)、[hypit](https://github.com/hypit-ai/hypit)、[FireRed-OpenStoryline](https://github.com/FireRedTeam/FireRed-OpenStoryline)：整体视频工作台/编排系统，本次不嵌套另一整套生产流程。
-- [chengfeng-videocut-skills](https://github.com/Agentchengfeng/chengfeng-videocut-skills)、[narrator-ai-cli-skill](https://github.com/NarratorAI-Studio/narrator-ai-cli-skill)：剪口播/解说工具链，不是增强当前Remotion动效的必需模块；已有稿和音轨时不接入自动重写、剪音轨或配音流程。
-- comfyui-mcp存在多个同名仓库；可在确有素材修复任务且已有兼容服务时另选接入，本次无具体图像修复输入，不加入动画必需依赖。
-- ux-ui-agent-skills、oh-my-design、jev-skill存在同名/泛设计项目；awesome-scientific-skills是科研技能索引，均未证明对本次历史视频动效有直接收益，不装入主流程。
-- draw-with-code、wise-motion、ge0-sleuth、prompt-master及没有owner的“4.lottie”“5.skills”：截至核查未唯一确认与收录描述相符的项目，不编造仓库或接口。以后有准确链接再评估。
-- 搜索未找到可确认为“小lin说官方动效Skill”的仓库。huashu中可核实的“讲解员式财经科普”语法是相近参考，非官方授权或复刻模板；借鉴讲解员/数字/证据互动，保留用户自己的内容和形象。
+## 适配到本片
 
-## 六份Word如何进入制作
+把来源中的设计意图落为：`source_id → 原句 → 视觉特征 → 动作起末状态 → 组件 → 证据`。记录URL、commit、具体文件、改编差异和planned／implemented／rendered／reviewed。只读文本就标文本参考，未查看成片不写“动态已看”。
 
-- 口播风格提示词：吸收拼贴、手绘线条揭示、数量实体化、绘画过程和参考参数拆解；把p5时间循环/MediaRecorder改成Remotion帧函数。文档称01–07，但实际只见01–06，不补造缺失模块。
-- 动效特点与“20个开源项目”合集：去重后按上表核实；后者实际列出9项，不按标题虚构剩余条目，也不以星数评质量。
-- 单彩渐变提示词：转换为“单色域调色 → 局部体积光/放射 → 动感模糊收束”的可选视觉研究。剪映0–100参数不是CSS/Remotion单位，需重标定并验画，不能称1:1等效。
-- 高级动效开场：吸收底层真实素材、信息辅助层、主动画层，以及素材卡空间关系、大字图形化和形态衔接；原文末尾截断，不补写其未给出的步骤。
-- 其他收录：只有能帮助当前文案且来源明确者进入工作流，其余保留核查结果。
+Remotion是统一实现方式：外部Canvas纯时间绘制可改为frame函数，SVG路径／形变用帧采样，Three.js与Lottie接入Remotion控制。项目运行包按实际需要安装，参考源码并不自动成为可导入组件。
 
-## 使用记录
+作者的模型分档、固定配色／镜长、持续运动配额、审批站点、营销／发布引导和自动配音不作为本技能规则。保留真正有用的风格特征和实现条件，项目的原声、字幕与素材策略优先。
 
-每项使用记录 source_url、source_path/commit（可获取时）、参考机制、适配说明、实现文件、许可证/资产条件及 planned/implemented/rendered/reviewed。当前参考方法可离线从本Skill继续使用；复用第三方代码时读取当前原文与许可，保留必要署名。不同项目能合用的是方法与帧组件，不是互相冲突的全局指令。
+## 已有补充参考
+
+- [Remotion官方](https://github.com/remotion-dev/skills)：时间轴、媒体、转场与版本API。
+- [motion-video-kit](https://github.com/echris6/motion-video-kit)：对象身份与跨镜状态接力。
+- [motion-graphics-skills](https://github.com/charlie947/motion-graphics-skills)、[motion-broll](https://github.com/Barty-Bart/motion-graphics)：拼贴证据和口播落点。
+- [Klik](https://github.com/t3knobox/klik-anim-skill-creation)、[iart](https://github.com/iart-ai/motion-design-skills)：观看路径与视觉导演。
+- [claude-remotion-skill](https://github.com/haidrrrry/claude-remotion-skill)、[LottieFiles](https://github.com/LottieFiles/motion-design-skill)：揭示、错峰、层间编排。
+- [product-launch-motion](https://github.com/AbubakrChan/product-launch-motion)、[claude-motion](https://github.com/whaleyxbt/claude-motion)：物体连续与cue表。
+- [v2版式](v2-templates.md)、RVE、Scenes：按信息关系补结构。
+- 旧注册线索[animate](https://github.com/cth9191/animate)、[claude-motion-design](https://github.com/howseen-ai/claude-motion-design)、[hyperframes-motion-reel](https://github.com/Sunwood-ai-labs/hyperframes-motion-reel-skill)：本轮未重新核对具体能力或组件，分析记录中保留为待核实来源；只有与文案需求相关时再核实原文，不把仓库名称当已实现效果。
+
+检索脚本 `query_motion_library.py <关键词> --library <名称>` 返回原文件；需要复用代码时核对该文件及许可。未选来源不加入项目依赖，不载入整套说明。
+
+Prompt Motion用`bootstrap_motion_libraries.py --library prompt-motion-charts --install-missing`建立公开案例元数据索引，不批量下载视频或复制提示词。作品归原作者，具体代码／素材许可按原出处核对。Herk旧别名hyperframes-student-kit保留兼容，新任务优先用herk-edit-kit；不要同时加载两套相同资料。
